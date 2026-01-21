@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="OpenSilver_Blazor_QuickStart/OpenSilver_Blazor_QuickStart.Browser/OpenSilver_Blazor_QuickStart.Browser.csproj" />
+  <Project Path="OpenSilver_Blazor_QuickStart/OpenSilver_Blazor_QuickStart.Simulator/OpenSilver_Blazor_QuickStart.Simulator.csproj" />
+  <Project Path="OpenSilver_Blazor_QuickStart/OpenSilver_Blazor_QuickStart/OpenSilver_Blazor_QuickStart.csproj" />
+</Solution>

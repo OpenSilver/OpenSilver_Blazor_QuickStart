@@ -1,0 +1,131 @@
+<div style="font-family: 'Segoe UI', sans-serif; font-size: 13px; color: #D4D4D4;">
+    
+    <!-- Header row -->
+    <div style="display: flex; padding: 8px 4px; color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;">
+        <div style="width: 32px;"></div>
+        <div style="flex: 1;">Task</div>
+        <div style="width: 80px;">Priority</div>
+        <div style="width: 36px;"></div>
+    </div>
+    
+    <!-- Task rows -->
+    @foreach (var task in _tasks)
+    {
+        <div style="display: flex; align-items: center; padding: 6px 4px; border-radius: 4px; margin-bottom: 2px; background: @(task.IsCompleted ? "#1a1a1a" : "transparent");">
+            
+            <!-- Checkbox -->
+            <div style="width: 32px; display: flex; justify-content: center;">
+                <div onclick="@(() => ToggleCompleted(task))" 
+                     style="width: 16px; height: 16px; border: 1.5px solid @(task.IsCompleted ? "#4EC9B0" : "#555"); border-radius: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; background: @(task.IsCompleted ? "#4EC9B0" : "transparent");">
+                    @if (task.IsCompleted)
+                    {
+                        <span style="color: #1E1E1E; font-size: 11px; font-weight: bold;">✓</span>
+                    }
+                </div>
+            </div>
+            
+            <!-- Task title -->
+            <div style="flex: 1; padding-right: 8px;">
+                <input type="text" value="@task.Title" 
+                       style="background: transparent; border: none; color: @(task.IsCompleted ? "#666" : "#D4D4D4"); padding: 4px 0; width: 100%; font-size: 13px; text-decoration: @(task.IsCompleted ? "line-through" : "none"); outline: none;"
+                       onfocus="this.style.borderBottom='1px solid #4EC9B0'"
+                       onblur="this.style.borderBottom='none'"
+                       onchange="@((ChangeEventArgs e) => UpdateTitle(task, e.Value?.ToString()))" />
+            </div>
+            
+            <!-- Priority -->
+            <div style="width: 80px; display: flex; align-items: center; gap: 6px;">
+                <div style="width: 8px; height: 8px; border-radius: 50%; background: @GetPriorityColor(task.Priority);"></div>
+                <select value="@task.Priority"
+                        style="background: transparent; border: none; color: #AAA; padding: 4px 0; font-size: 12px; cursor: pointer; outline: none;"
+                        onchange="@((ChangeEventArgs e) => UpdatePriority(task, e.Value?.ToString()))">
+                    <option value="High" style="background: #2D2D2D; color: #D4D4D4;">High</option>
+                    <option value="Medium" style="background: #2D2D2D; color: #D4D4D4;">Medium</option>
+                    <option value="Low" style="background: #2D2D2D; color: #D4D4D4;">Low</option>
+                </select>
+            </div>
+            
+            <!-- Delete button -->
+            <div style="width: 36px; display: flex; justify-content: center;">
+                <div onclick="@(() => DeleteTask(task))" 
+                     style="cursor: pointer; opacity: 0.4; font-size: 18px; padding: 4px;"
+                     onmouseover="this.style.opacity='1'"
+                     onmouseout="this.style.opacity='0.4'">🗑</div>
+            </div>
+        </div>
+    }
+    
+    <!-- Add task button -->
+    <div style="margin-top: 12px;">
+        <div onclick="@AddTask" 
+             style="display: inline-flex; align-items: center; gap: 6px; color: #4EC9B0; cursor: pointer; padding: 6px 0; font-size: 13px;"
+             onmouseover="this.style.opacity='0.8'"
+             onmouseout="this.style.opacity='1'">
+            <span style="font-size: 16px;">+</span>
+            <span>Add task</span>
+        </div>
+    </div>
+</div>
+
+@code {
+    private class Task
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public bool IsCompleted { get; set; }
+        public string Priority { get; set; }
+    }
+
+    private List<Task> _tasks = new List<Task>
+    {
+        new Task { Id = 1, Title = "Review pull request", IsCompleted = false, Priority = "High" },
+        new Task { Id = 2, Title = "Update documentation", IsCompleted = true, Priority = "Medium" },
+        new Task { Id = 3, Title = "Fix login bug", IsCompleted = false, Priority = "High" },
+        new Task { Id = 4, Title = "Add unit tests", IsCompleted = false, Priority = "Low" },
+    };
+
+    private int _nextId = 5;
+
+    private string GetPriorityColor(string priority) => priority switch
+    {
+        "High" => "#F14C4C",
+        "Medium" => "#CCA700",
+        "Low" => "#4EC9B0",
+        _ => "#888"
+    };
+
+    private void ToggleCompleted(Task task)
+    {
+        task.IsCompleted = !task.IsCompleted;
+        StateHasChanged();
+    }
+
+    private void UpdateTitle(Task task, string newTitle)
+    {
+        task.Title = newTitle ?? "";
+    }
+
+    private void UpdatePriority(Task task, string newPriority)
+    {
+        task.Priority = newPriority ?? "Medium";
+        StateHasChanged();
+    }
+
+    private void AddTask()
+    {
+        _tasks.Add(new Task 
+        { 
+            Id = _nextId++, 
+            Title = "New task", 
+            IsCompleted = false, 
+            Priority = "Medium" 
+        });
+        StateHasChanged();
+    }
+
+    private void DeleteTask(Task task)
+    {
+        _tasks.Remove(task);
+        StateHasChanged();
+    }
+}

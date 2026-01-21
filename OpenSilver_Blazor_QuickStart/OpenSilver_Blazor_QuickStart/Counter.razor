@@ -1,0 +1,17 @@
+<div style="color: #D4D4D4; font-family: 'Segoe UI', sans-serif;">
+    <h4 style="margin: 0 0 10px 0; color: #9CDCFE;">Counter Component</h4>
+    <p style="margin: 5px 0;">Current count: <strong style="color: #B5CEA8;">@currentCount</strong></p>
+    <button style="background-color: #0E639C; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; margin-top: 10px;"
+            onclick="@IncrementCount">
+        Click to increment
+    </button>
+</div>
+
+@code {
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+}
