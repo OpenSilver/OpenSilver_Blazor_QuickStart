@@ -35,7 +35,7 @@
                                FontSize="13" TextWrapping="Wrap" Foreground="#CCCCCC" Margin="0,0,0,15"/>
                     
                     <Border Background="#2D2D2D" CornerRadius="4" Padding="15">
-                        <razor:RazorComponent >
+                        <razor:RazorComponent>
                             <h3 style="margin: 0; color: #CE9178;">Hello from Blazor!</h3>
                             <p style="color: #D4D4D4;">This HTML is rendered by a Blazor component embedded in XAML.</p>
                         </razor:RazorComponent>
@@ -54,7 +54,7 @@
                                FontSize="13" TextWrapping="Wrap" Foreground="#CCCCCC" Margin="0,0,0,15"/>
                     
                     <Border Background="#2D2D2D" CornerRadius="4" Padding="15">
-                        <razor:RazorComponent >
+                        <razor:RazorComponent>
                             <div style="color: #D4D4D4;">
                                 <p><strong style="color: #9CDCFE;">Welcome Message:</strong> "{Binding WelcomeMessage, Type=String}"</p>
                                 <p><strong style="color: #9CDCFE;">Current Time:</strong> "{Binding CurrentTime, Type=String}"</p>
@@ -141,7 +141,7 @@
                                FontSize="13" TextWrapping="Wrap" Foreground="#CCCCCC" Margin="0,0,0,15"/>
                     
                     <Border Background="#2D2D2D" CornerRadius="4" Padding="15">
-                        <razor:RazorComponent >
+                        <razor:RazorComponent>
                             <button style="background-color: #0E639C; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; margin-right: 10px;"
                                     onclick="{Binding OnButtonClick, Type=Action}">
                                 Click Me!
